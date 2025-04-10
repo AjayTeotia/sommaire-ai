@@ -1,10 +1,8 @@
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { FileTextIcon } from "lucide-react";
-import { Button } from "../ui/button";
 import { NavLink } from "./NavLink";
 
 export const Header = () => {
-    const isLoggedIn = false;
-
     return (
         <nav className="container flex items-center justify-between py-4 px-2 lg:px-8 mx-auto">
             {/* Logo with icon and test */}
@@ -21,28 +19,32 @@ export const Header = () => {
                 <NavLink href="/#pricing">Pricing</NavLink>
 
                 {/* Dashboard */}
-                {isLoggedIn && <NavLink href="/dashboard">Your Summaries</NavLink>}
+                <SignedIn>
+                    <NavLink href="/dashboard">Your Summaries</NavLink>
+                </SignedIn>
             </div>
 
             {/* Sign in, sign out, upload file, pro */}
             <div className="flex lg:justify-end lg:flex-1">
-                {isLoggedIn
-                    ? (
-                        <div className="flex gap-2 items-center">
-                            {/* Upload */}
-                            <NavLink href="/upload">Upload A PDF</NavLink>
-                            {/* pro */}
-                            <div>Pro</div>
+                <SignedIn>
+                    <div className="flex gap-2 items-center">
+                        {/* Upload */}
+                        <NavLink href="/upload">Upload A PDF</NavLink>
+                        {/* pro */}
+                        <div>Pro</div>
 
-                            {/* Sign out */}
-                            <Button>Sign Out</Button>
-                        </div>
-                    ) : (
-                        <div>
-                            {/* Sign in */}
-                            <NavLink href="/sign-in">Sign In</NavLink>
-                        </div>
-                    )}
+                        {/* Sign out */}
+                        <SignedIn>
+                            <UserButton />
+                        </SignedIn>
+                    </div>
+                </SignedIn>
+
+                <SignedOut>
+                    {/* Sign in */}
+                    <NavLink href="/sign-in">Sign In</NavLink>
+                </SignedOut>
+
             </div>
         </nav>
     )
