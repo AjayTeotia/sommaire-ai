@@ -1,9 +1,10 @@
 "use client"
 
+import { generatePDFSummary } from "@/action/upload.action"
 import { useUploadThing } from "@/utils/uploadthing"
+import { toast } from "sonner"
 import { z } from "zod"
 import { UploadFormInput } from "./UploadFormInput"
-import { toast } from "sonner"
 
 const schema = z.object({
     file: z.instanceof(File, { message: "Invalid file" })
@@ -26,7 +27,7 @@ export const UploadForm = () => {
         },
         onUploadError: (error) => {
             console.error('Error occurred while uploading', error)
-            toast.error('Error occurred while uploading', error)
+            toast.error('Error occurred while uploading')
         },
         onUploadBegin: ({ file }) => {
             console.log('Upload has begun for', file)
@@ -61,7 +62,11 @@ export const UploadForm = () => {
             return;
         }
 
+        toast.message("Processing your file...")
 
+        const summary = await generatePDFSummary(resp)
+
+        console.log("summary", summary)
     }
 
     return (
