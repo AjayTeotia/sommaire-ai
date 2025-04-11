@@ -1,7 +1,9 @@
 "use client"
 
+import { useUploadThing } from "@/utils/uploadthing"
 import { z } from "zod"
 import { UploadFormInput } from "./UploadFormInput"
+import { toast } from "sonner"
 
 const schema = z.object({
     file: z.instanceof(File, { message: "Invalid file" })
@@ -16,7 +18,24 @@ const schema = z.object({
 })
 
 export const UploadForm = () => {
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const { startUpload, routeConfig } = useUploadThing(
+        "pdfUploader", {
+        onClientUploadComplete: () => {
+            console.log('Upload Successfully')
+            toast.success('Upload Successfully')
+        },
+        onUploadError: (error) => {
+            console.error('Error occurred while uploading', error)
+            toast.error('Error occurred while uploading', error)
+        },
+        onUploadBegin: ({ file }) => {
+            console.log('Upload has begun for', file)
+            toast.success('Upload has begun for', file)
+        }
+    }
+    );
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         console.log('submit')
 
@@ -28,10 +47,21 @@ export const UploadForm = () => {
             console.log(
                 validatedFields.error.flatten().fieldErrors.file?.[0] ?? "Invalid file"
             )
+            toast.error(validatedFields.error.flatten().fieldErrors.file?.[0] ?? "Invalid file")
             return;
         }
 
-        console.log(file)
+        // console.log(file)
+
+        toast.loading('Uploading...')
+
+        const resp = await startUpload([file])
+        if (!resp) {
+            toast.error('Something went wrong')
+            return;
+        }
+
+
     }
 
     return (
