@@ -112,22 +112,10 @@ export async function savePDFSummary({
     summary,
     title,
     fileName
-}: pdfSummaryType): Promise<{ id: string }> {  // Return the saved summary's ID
+}: pdfSummaryType) {  // Return the saved summary's ID
     try {
-        console.log("Saving PDF Summary:", { userId, fileUrl, summary, title, fileName });
         const sql = await getDBConnection();
-
-        // Log the values being inserted to check for issues
-        console.log("Inserting values into database:", {
-            userId,
-            fileUrl,
-            summary,
-            title,
-            fileName
-        });
-
-        // Insert into the database and return the result with the ID of the inserted row
-        const result = await sql`
+        const [savedSummary] = await sql`
             INSERT INTO pdf_summaries(
                 user_id,
                 original_file_url,
@@ -142,13 +130,9 @@ export async function savePDFSummary({
                 ${title},
                 ${fileName}
             ) 
-            RETURNING id`;  // Return the 'id' of the inserted row
+            RETURNING id, summary_text`;  // Return the 'id' of the inserted row
 
-        // Extract the id from the result
-        const savedSummary = result[0]; // Assuming the result is an array with the inserted row
-        console.log("PDF summary saved successfully", savedSummary);
-
-        return { id: savedSummary.id };  // Return the ID
+        return savedSummary;
     } catch (error) {
         console.error("Error saving PDF summary:", error);
         throw new Error("Error saving PDF summary");

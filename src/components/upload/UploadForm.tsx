@@ -98,7 +98,7 @@ export const UploadForm = () => {
                     formRef.current?.reset();
 
                     // TODO: Redirect to the [id] summary page.
-                    router.push(`/summaries/${storeResult.id}`)
+                    router.push(`/summaries/${storeResult.data.id}`)
                 }
             }
         } catch (error) {
