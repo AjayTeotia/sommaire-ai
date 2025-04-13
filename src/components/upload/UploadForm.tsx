@@ -1,11 +1,12 @@
 "use client"
 
-import { generatePDFSummary } from "@/action/upload.action"
+import { generatePDFSummary, storePDFSummaryAction } from "@/action/upload.action"
 import { useUploadThing } from "@/utils/uploadthing"
 import { useRef, useState } from "react"
 import { toast } from "sonner"
 import { set, z } from "zod"
 import UploadFormInput from "./UploadFormInput"
+import { useRouter } from "next/navigation"
 
 const schema = z.object({
     file: z.instanceof(File, { message: "Invalid file" })
@@ -22,6 +23,7 @@ const schema = z.object({
 export const UploadForm = () => {
     const formRef = useRef<HTMLFormElement>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
 
     const { startUpload, routeConfig } = useUploadThing(
         "pdfUploader", {
@@ -80,22 +82,32 @@ export const UploadForm = () => {
 
             const { data = null, message, success } = result || {};
             if (data) {
+                let storeResult: any;
                 toast.success("Saving PDF...")
 
-                formRef.current?.reset();
-                // if (data.summary) {
-                // save to database  
-                // }
-            }
+                if (data.summary) {
+                    storeResult = await storePDFSummaryAction({
+                        summary: data.summary,
+                        title: data.title,
+                        fileUrl: resp[0].serverData.file.url,
+                        fileName: file.name
+                    })
 
-            // 
-            // 
+                    toast.success("PDF summary generated and saved successfully")
+
+                    formRef.current?.reset();
+
+                    // TODO: Redirect to the [id] summary page.
+                    router.push(`/summaries/${storeResult.id}`)
+                }
+            }
         } catch (error) {
             setIsLoading(false);
             console.error("Error occurred while uploading", error)
             formRef.current?.reset();
+        } finally {
+            setIsLoading(false);
         }
-
     }
 
     return (
