@@ -14,7 +14,14 @@ export default async function SummaryPage({ params }: { params: { id: string } }
         notFound();
     }
 
-    const { title, summary_text, file_name, word_count, created_at } = summary;
+    const {
+        title,
+        summary_text,
+        file_name,
+        word_count,
+        created_at,
+        original_file_url
+    } = summary;
 
     const reading_time = Math.ceil((word_count || 0) / 200);
 
@@ -28,7 +35,15 @@ export default async function SummaryPage({ params }: { params: { id: string } }
                         <SummaryHeader title={title} createdAt={created_at} readingTime={reading_time} />
                     </div>
 
-                    {file_name && <SourceInfo fileName={file_name} />}
+                    {file_name &&
+                        <SourceInfo
+                            fileName={file_name}
+                            title={title}
+                            summaryText={summary_text}
+                            createdAt={created_at}
+                            originalFileUrl={original_file_url}
+                        />
+                    }
 
                     <div className="relative mt-4 sm:mt-8 lg:mt-16">
                         <div className="relative p-4 sm:p-6 lg:p-8 bg-white/80 backdrop-blur-md rounded-2xl sm:rounded-3xl shadow-xl border border-rose-100/30 transition-all duration-300 hover:shadow-2xl hover:bg-white/90 max-w-4xl mx-auto">
@@ -40,7 +55,7 @@ export default async function SummaryPage({ params }: { params: { id: string } }
                             </div>
 
                             <div className="relative mt-8 sm:mt-6 flex justify-center">
-                                <SummaryViewer summaryText={summary_text} />
+                                <SummaryViewer summary={summary_text} />
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 import { ExternalLinkIcon, FileTextIcon } from "lucide-react"
 import { Button } from "../ui/button"
+import { DownloadSummaryButton } from "./DownloadSummaryButton"
 
 export const SourceInfo = ({
     fileName,
@@ -38,7 +39,12 @@ export const SourceInfo = ({
                         </a>
                     </Button>
 
-                    
+                    <DownloadSummaryButton 
+                        title={title}
+                        summaryText={summaryText}
+                        fileName={fileName}
+                        createdAt={createdAt}
+                    />
                 </div>
             </div>
     )
