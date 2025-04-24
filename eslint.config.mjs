@@ -16,11 +16,14 @@ const eslintConfig = [
       "next/typescript",
       "prettier",
       "plugin:tailwindcss/recommended",
+      "next",
     ],
-    plugins: ["prettier"],
+    plugins: ["prettier", "tailwindcss"],
     rules: {
       "prettier/prettier": "error",
       "react/no-escape-entities": "off",
+      "react/no-unescaped-entities": "off",
+      "next/next/no-img-element": "off",
     },
   }),
 ];

@@ -16,7 +16,7 @@ export const Header = () => {
             {/*Pricing and dashboard */}
             <div className="flex lg:justify-center lg:items-center gap-4 lg:gap-12">
                 {/* Pricing */}
-                <NavLink href="/#pricing">Pricing</NavLink>
+                {/* <NavLink href="/#pricing">Pricing</NavLink> */}
 
                 {/* Dashboard */}
                 <SignedIn>
@@ -31,7 +31,7 @@ export const Header = () => {
                         {/* Upload */}
                         <NavLink href="/upload">Upload A PDF</NavLink>
                         {/* pro */}
-                        <div>Pro</div>
+                        {/* <div>Pro</div> */}
 
                         {/* Sign out */}
                         <SignedIn>

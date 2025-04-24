@@ -44,7 +44,7 @@ export default async function Dashboard() {
                         </Button>
                     </div>
 
-                    <div className="mb-6">
+                    {/* <div className="mb-6">
                         <div className="bg-rose-50 border border-rose-200 rounded-lg p-4 text-rose-800">
                             <p className="text-sm">
                                 You've reached the limit of {uploadLimit} uploads on the Basic Plan{" "}
@@ -56,7 +56,7 @@ export default async function Dashboard() {
                                 {" "} for unlimited uploads
                             </p>
                         </div>
-                    </div>
+                    </div> */}
 
                     {summary.length === 0
                         ? <EmptySummary />

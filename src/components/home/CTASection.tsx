@@ -18,7 +18,7 @@ export const CTASection = () => {
                     </div>
 
 
-                    <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
+                    {/* <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
                         <div>
                             <Button
                                 size={"lg"}
@@ -31,7 +31,7 @@ export const CTASection = () => {
                                 </Link>
                             </Button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>

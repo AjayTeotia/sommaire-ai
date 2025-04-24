@@ -6,7 +6,11 @@ import { getSummaryByID } from "@/lib/summaries";
 import { FileTextIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 
-export default async function SummaryPage({ params }: { params: { id: string } }) {
+interface RouteParams {
+    params: Promise<Record<string, string>>;
+}
+
+export default async function SummaryPage({ params }: RouteParams) {
     const { id } = await params;
 
     const summary = await getSummaryByID(id);

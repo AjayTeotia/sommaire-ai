@@ -22,7 +22,7 @@ export default function Home() {
         <HowItWorkSection />
 
         {/* pricing */}
-        <PricingSection />
+        {/* <PricingSection /> */}
 
         {/* CTASection */}
         <CTASection />
