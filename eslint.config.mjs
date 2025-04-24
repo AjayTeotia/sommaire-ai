@@ -10,22 +10,7 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.config({
-    extends: [
-      "next/core-web-vitals",
-      "next/typescript",
-      "prettier",
-      "plugin:tailwindcss/recommended",
-      "next",
-    ],
-    plugins: ["prettier", "tailwindcss"],
-    rules: {
-      "prettier/prettier": "error",
-      "react/no-escape-entities": "off",
-      "react/no-unescaped-entities": "off",
-      "next/next/no-img-element": "off",
-    },
-  }),
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
 ];
 
 export default eslintConfig;
